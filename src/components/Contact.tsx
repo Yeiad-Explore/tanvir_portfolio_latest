@@ -1,24 +1,25 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const Contact: React.FC = () => {
   const sectionRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    subject: '',
     message: ''
   });
 
   useEffect(() => {
-    gsap.fromTo('.contact-item',
-      { opacity: 0, y: 30 },
+    gsap.fromTo(formRef.current,
+      { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
-        duration: 0.6,
-        stagger: 0.1,
+        duration: 0.8,
         ease: 'power2.out',
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -31,16 +32,19 @@ const Contact: React.FC = () => {
   }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission here
     console.log('Form submitted:', formData);
+    // Reset form
+    setFormData({ name: '', email: '', message: '' });
   };
 
   const contactInfo = [
@@ -50,9 +54,9 @@ const Contact: React.FC = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
         </svg>
       ),
-      label: "Email",
-      value: "tanvirchowdhory@gmail.com",
-      link: "mailto:tanvirchowdhory@gmail.com"
+      label: 'Email',
+      value: 'tanvir.ahmed@example.com',
+      link: 'mailto:tanvir.ahmed@example.com'
     },
     {
       icon: (
@@ -60,9 +64,9 @@ const Contact: React.FC = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
         </svg>
       ),
-      label: "Phone",
-      value: "+8801639855465",
-      link: "tel:+8801639855465"
+      label: 'Phone',
+      value: '+880 123 456 7890',
+      link: 'tel:+8801234567890'
     },
     {
       icon: (
@@ -71,9 +75,19 @@ const Contact: React.FC = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
         </svg>
       ),
-      label: "Location",
-      value: "Lalmatia, Dhaka 1207",
-      link: "#"
+      label: 'Location',
+      value: 'Lalmatia, Dhaka 1207',
+      link: '#'
+    },
+    {
+      icon: (
+        <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      ),
+      label: 'LinkedIn',
+      value: 'linkedin.com/in/tanvir-ahmed',
+      link: 'https://linkedin.com/in/tanvir-ahmed'
     }
   ];
 
@@ -87,136 +101,128 @@ const Contact: React.FC = () => {
           <div className="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12">
+        <div ref={formRef} className="grid lg:grid-cols-2 gap-12">
+          {/* Contact Form */}
+          <div className="glass-card p-8">
+            <h3 className="text-2xl font-bold text-white mb-6">Send a Message</h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                  className="glass-input w-full"
+                  placeholder="Your Name"
+                />
+              </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                  className="glass-input w-full"
+                  placeholder="your.email@example.com"
+                />
+              </div>
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  required
+                  rows={5}
+                  className="glass-input w-full resize-none"
+                  placeholder="Your message..."
+                />
+              </div>
+              <button
+                type="submit"
+                className="w-full hero-button glass-card px-8 py-4 text-white hover:neon-glow transition-all duration-300 hover:scale-105 group relative overflow-hidden"
+              >
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  Send Message
+                  <svg
+                    className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-300"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                    />
+                  </svg>
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-neon-blue/10 to-neon-purple/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </button>
+            </form>
+          </div>
+
           {/* Contact Information */}
           <div className="space-y-8">
-            <div className="contact-item">
-              <h3 className="text-2xl font-medium text-white mb-6">
-                Let's work together
-              </h3>
-              <p className="text-gray-300 leading-relaxed mb-8">
-                I'm always interested in new opportunities and collaborations. 
-                Whether you have a project in mind or just want to chat about 
-                data science and machine learning, feel free to reach out!
-              </p>
-            </div>
-
-            <div className="space-y-6">
-              {contactInfo.map((info, index) => (
-                <div key={index} className="contact-item">
-                  <a 
+            <div className="glass-card p-8">
+              <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+              <div className="space-y-6">
+                {contactInfo.map((info, index) => (
+                  <a
+                    key={index}
                     href={info.link}
-                    className="glass-card p-6 flex items-center gap-4 hover:neon-glow transition-all duration-300 group"
+                    className="flex items-center gap-4 p-4 rounded-lg glass-card hover:neon-glow-soft transition-all duration-300 group"
                   >
                     <div className="text-neon-blue group-hover:text-neon-purple transition-colors duration-300">
                       {info.icon}
                     </div>
                     <div>
-                      <div className="text-sm text-gray-400">{info.label}</div>
-                      <div className="text-white font-medium">{info.value}</div>
+                      <p className="text-gray-400 text-sm">{info.label}</p>
+                      <p className="text-white font-medium">{info.value}</p>
                     </div>
                   </a>
-                </div>
-              ))}
-            </div>
-
-            {/* Social Links */}
-            <div className="contact-item">
-              <div className="glass-card p-6">
-                <h4 className="text-lg font-medium text-white mb-4">Connect with me</h4>
-                <div className="flex gap-4">
-                  <a 
-                    href="https://github.com" 
-                    className="p-3 bg-glass/30 rounded-lg hover:neon-glow transition-all duration-300"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                    </svg>
-                  </a>
-                  <a 
-                    href="https://linkedin.com" 
-                    className="p-3 bg-glass/30 rounded-lg hover:neon-glow transition-all duration-300"
-                  >
-                    <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                    </svg>
-                  </a>
-                </div>
+                ))}
               </div>
             </div>
-          </div>
 
-          {/* Contact Form */}
-          <div className="contact-item">
-            <form ref={formRef} onSubmit={handleSubmit} className="glass-card p-8">
-              <h3 className="text-2xl font-medium text-white mb-6">Send me a message</h3>
-              
-              <div className="space-y-6">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Name</label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleInputChange}
-                      className="glass-input w-full"
-                      placeholder="Your name"
-                      required
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-2">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="glass-input w-full"
-                      placeholder="your.email@example.com"
-                      required
-                    />
-                  </div>
-                </div>
-                
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2">Subject</label>
-                  <input
-                    type="text"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleInputChange}
-                    className="glass-input w-full"
-                    placeholder="What's this about?"
-                    required
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm text-gray-300 mb-2">Message</label>
-                  <textarea
-                    name="message"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="glass-input w-full h-32 resize-none"
-                    placeholder="Tell me about your project or idea..."
-                    required
-                  />
-                </div>
-                
-                <button
-                  type="submit"
-                  className="w-full glass-card py-4 text-white font-medium hover:neon-glow transition-all duration-300 hover:scale-105 group"
+            <div className="glass-card p-8">
+              <h3 className="text-2xl font-bold text-white mb-4">Let's Connect</h3>
+              <p className="text-gray-300 leading-relaxed mb-6">
+                I'm always open to discussing new opportunities, collaborations, and innovative projects in the field of data science and machine learning. Feel free to reach out!
+              </p>
+              <div className="flex gap-4">
+                <a
+                  href="https://linkedin.com/in/tanvir-ahmed"
+                  className="p-3 glass-card hover:neon-glow-soft transition-all duration-300 hover:scale-105"
                 >
-                  <span className="flex items-center justify-center gap-2">
-                    Send Message
-                    <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                    </svg>
-                  </span>
-                </button>
+                  <svg className="w-6 h-6 text-neon-blue" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                </a>
+                <a
+                  href="https://github.com/tanvir-ahmed"
+                  className="p-3 glass-card hover:neon-glow-soft transition-all duration-300 hover:scale-105"
+                >
+                  <svg className="w-6 h-6 text-neon-purple" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                </a>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>

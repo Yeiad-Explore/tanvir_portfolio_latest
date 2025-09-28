@@ -1,68 +1,48 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Hero from './components/Hero';
-import About from './components/About';
-import Experience from './components/Experience';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import CursorGlow from './components/CursorGlow';
-import BackgroundBlobs from './components/BackgroundBlobs';
+import React from "react";
+import Navigation from "./components/Navigation";
+import Hero from "./components/Hero";
+import About from "./components/About";
+import Experience from "./components/Experience";
+import Projects from "./components/Projects";
+import Contact from "./components/Contact";
+import ParticleField from "./components/ParticleField";
+import BackgroundBlobs from "./components/BackgroundBlobs";
+import Scene3D from "./components/Scene3D";
+import { Footer } from "./components/ui/footer-section";
 
-gsap.registerPlugin(ScrollTrigger);
-
-const App: React.FC = () => {
-  const appRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    // Initialize GSAP animations
-    gsap.fromTo('.fade-in', 
-      { opacity: 0, y: 30 },
-      { 
-        opacity: 1, 
-        y: 0, 
-        duration: 0.8, 
-        stagger: 0.2,
-        ease: 'power2.out'
-      }
-    );
-
-    // Parallax effect for background elements
-    gsap.to('.parallax-slow', {
-      y: -50,
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 1
-      }
-    });
-
-    gsap.to('.parallax-fast', {
-      y: -100,
-      scrollTrigger: {
-        trigger: 'body',
-        start: 'top top',
-        end: 'bottom bottom',
-        scrub: 2
-      }
-    });
-  }, []);
-
+function App() {
   return (
-    <div ref={appRef} className="relative min-h-screen overflow-hidden">
-      <CursorGlow />
+    <div className="min-h-screen bg-gray-900 text-white relative overflow-x-hidden smooth-scroll">
+      <ParticleField />
       <BackgroundBlobs />
-      
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Experience />
-        <Projects />
-        <Contact />
+      <Scene3D />
+      <Navigation />
+
+      <main>
+        <section id="hero">
+          <Hero />
+        </section>
+
+        <section id="about">
+          <About />
+        </section>
+
+        <section id="experience">
+          <Experience />
+        </section>
+
+        <section id="projects">
+          <Projects />
+        </section>
+
+        <section id="contact">
+          <Contact />
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
-};
+}
 
 export default App;

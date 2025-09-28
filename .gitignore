@@ -2,7 +2,7 @@
 /node_modules
 /.pnp
 .pnp.js
-
+.claude
 # Testing
 /coverage
 
@@ -29,3 +29,4 @@ yarn-error.log*
 
 # OS
 Thumbs.db
+nul
