@@ -140,45 +140,58 @@ const About: React.FC = () => {
 
     setIsTransitioning(true);
 
-    // Smooth button transition
-    gsap.to(`[data-tab]`, {
-      scale: 0.95,
-      duration: 0.1,
-      ease: "power2.out",
-    });
-
     const contentArea = sectionRef.current?.querySelector(".glass-card");
+    const buttons = sectionRef.current?.querySelectorAll(`[data-tab]`);
+
+    // Smooth button scale animation
+    if (buttons) {
+      gsap.to(buttons, {
+        scale: 0.97,
+        duration: 0.15,
+        ease: "power2.out",
+      });
+    }
+
     if (contentArea) {
       // Fade out current content with smooth transition
       gsap.to(contentArea, {
         opacity: 0,
-        y: 15,
-        scale: 0.98,
+        y: 8,
+        scale: 0.99,
         duration: 0.25,
         ease: "power2.inOut",
         onComplete: () => {
           setSelectedTab(tabId);
-          // Fade in new content with smooth entrance
-          gsap.fromTo(
-            contentArea,
-            { opacity: 0, y: -15, scale: 1.02 },
-            {
-              opacity: 1,
-              y: 0,
-              scale: 1,
-              duration: 0.3,
-              ease: "back.out(1.2)",
-              onComplete: () => {
-                setIsTransitioning(false);
-                // Reset button scales
-                gsap.to(`[data-tab]`, {
-                  scale: 1,
-                  duration: 0.2,
-                  ease: "power2.out",
-                });
-              },
-            }
-          );
+          // Small delay to ensure state update
+          setTimeout(() => {
+            // Fade in new content with smooth entrance
+            gsap.fromTo(
+              contentArea,
+              { opacity: 0, y: -8, scale: 1.01 },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.35,
+                ease: "power2.out",
+                onComplete: () => {
+                  // Reset button scales smoothly
+                  if (buttons) {
+                    gsap.to(buttons, {
+                      scale: 1,
+                      duration: 0.3,
+                      ease: "power2.out",
+                      onComplete: () => {
+                        setIsTransitioning(false);
+                      },
+                    });
+                  } else {
+                    setIsTransitioning(false);
+                  }
+                },
+              }
+            );
+          }, 10);
         },
       });
     } else {
@@ -198,9 +211,21 @@ const About: React.FC = () => {
     overview: {
       title: "Who I Am",
       content: [
-        "Passionate Research and Data Analyst specializing in Machine Learning and Deep Learning for medical applications.",
-        "Currently contributing to cutting-edge AI research at Neural Semiconductor Limited, focusing on data processing and ML model development.",
-        "Dedicated to leveraging technology to solve real-world healthcare challenges through innovative data science solutions.",
+        <>
+          I'm Tanvir the <strong>Team Lead</strong> of the Research Team at{" "}
+          <strong>Neural Semiconductor Ltd.</strong>, guiding data analysis and
+          research projects across diverse domains.
+        </>,
+        <>
+          I started as a <strong>Research Assistant</strong> at{" "}
+          <strong>NSU</strong> and hold a CSE degree. Beyond work, I'm
+          passionate about exploring new technologies, learning continuously,
+          and solving real-world problems.
+        </>,
+        <>
+          I also enjoy web development, software quality assurance, and applying
+          creativity to turn ideas into impactful solutions.
+        </>,
       ],
       stats: [
         { label: "CGPA", value: "3.43", icon: "📊" },
@@ -275,7 +300,7 @@ const About: React.FC = () => {
             >
               <ProfileCard
                 name="Tanvir Ahmed Chowdhury"
-                title="Research & Data Analyst"
+                title="Team Lead—Research & Data Analyst"
                 handle="tanvir_data"
                 status="Available for Projects"
                 contactText="Get In Touch"
@@ -301,9 +326,10 @@ const About: React.FC = () => {
                 <button
                   key={tab.id}
                   data-tab
+                  data-tab-id={tab.id}
                   onClick={() => handleTabChange(tab.id)}
                   disabled={isTransitioning}
-                  className={`px-6 py-3 rounded-full font-medium tab-button flex items-center gap-2 smooth-3d transition-all duration-300 ${
+                  className={`px-6 py-3 rounded-full font-medium tab-button flex items-center gap-2 smooth-3d transition-all duration-500 ease-in-out ${
                     selectedTab === tab.id
                       ? "bg-gradient-to-r from-neon-blue to-neon-purple text-white shadow-lg scale-105"
                       : "glass-card text-gray-300 hover:text-white hover:scale-105"
@@ -355,7 +381,7 @@ const About: React.FC = () => {
                       <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300">
                         {stat.icon}
                       </div>
-                      <div className="text-xl font-bold gradient-text">
+                      <div className="text-xl font-bold text-white">
                         {stat.value}
                       </div>
                       <div className="text-sm text-gray-400">{stat.label}</div>

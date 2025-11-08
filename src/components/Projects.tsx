@@ -53,13 +53,14 @@ const Projects: React.FC = () => {
 
   const projects = [
     {
-      title: "Medical Image Classification",
+      title: "Heat-Related Illness Risk Prediction using ML & Explainable AI",
       description:
-        "Developed a deep learning model for classifying medical images with 94% accuracy using CNN architectures.",
-      technologies: ["Python", "TensorFlow", "OpenCV", "Medical Imaging"],
+        "Built ML models analyzing environmental & physiological data for early risk detection in high-risk zones. Designed explainability modules for better interpretation.",
+      technologies: ["Python", "XAI", "PyTorch", "Medical Data", "Flask"],
       category: "ml",
-      github: "#",
-      demo: "#",
+      github:
+        "https://github.com/Tanvir7898/Classification-of-Heat-Related-Illness-Risk-Using-Machine-Learning-and-Explainable-AI",
+      demo: "https://github.com/Tanvir7898/Classification-of-Heat-Related-Illness-Risk-Using-Machine-Learning-and-Explainable-AI",
       visual: {
         mainColor: "#3b82f6", // Blue for medical/healthcare
         secondaryColor: "#10b981", // Green for success/accuracy
@@ -67,10 +68,11 @@ const Projects: React.FC = () => {
       },
     },
     {
-      title: "Healthcare Data Pipeline",
+      title:
+        "Adaptive SE + Enhanced VGG-19 for Endodontic Image Classification",
       description:
-        "Built an automated data pipeline for processing and analyzing healthcare datasets from multiple sources.",
-      technologies: ["Python", "Pandas", "SQL", "Data Engineering"],
+        "Developed a deep learning-based framework to classify endodontic images by integrating Adaptive Squeeze-and-Excitation modules with a Feature Pyramid Network. Improved robustness against class imbalance and complex feature extraction.",
+      technologies: ["Python", "Deep Learning", "SQL", "Data Annotation"],
       category: "data",
       github: "#",
       demo: "#",
@@ -84,7 +86,7 @@ const Projects: React.FC = () => {
       title: "Predictive Analytics Dashboard",
       description:
         "Created an interactive dashboard for visualizing healthcare predictions and trends.",
-      technologies: ["Python", "Plotly", "Streamlit", "Data Visualization"],
+      technologies: ["Python", "Tableau", "PowerBI", "Data Visualization"],
       category: "visualization",
       github: "#",
       demo: "#",
@@ -95,15 +97,10 @@ const Projects: React.FC = () => {
       },
     },
     {
-      title: "Research Paper Analysis",
+      title: "Drug Addiction Prediction in Bangladesh with Explainable AI",
       description:
-        "IEEE published research on machine learning applications in medical diagnostics.",
-      technologies: [
-        "Research",
-        "Machine Learning",
-        "Medical AI",
-        "Publication",
-      ],
+        "Developed a predictive system using socio-economic and demographic data to aid policymakers in identifying high-risk groups.",
+      technologies: ["Research", "Machine Learning", "Medical AI", "XAI"],
       category: "research",
       github: "#",
       demo: "#",
@@ -132,8 +129,11 @@ const Projects: React.FC = () => {
     <section ref={sectionRef} className="py-20 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-light text-white mb-4">
-            Featured <span className="gradient-text">Projects</span>
+          <h2
+            className="text-4xl md:text-5xl font-light mb-4"
+            style={{ color: "#F8F8FF" }}
+          >
+            Featured Projects
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-neon-blue to-neon-purple mx-auto rounded-full"></div>
         </div>

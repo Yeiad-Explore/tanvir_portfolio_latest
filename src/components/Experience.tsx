@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React, { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -9,38 +9,53 @@ const Experience: React.FC = () => {
   const experienceRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    gsap.fromTo(experienceRef.current,
+    gsap.fromTo(
+      experienceRef.current,
       { opacity: 0, y: 50 },
       {
         opacity: 1,
         y: 0,
         duration: 0.8,
-        ease: 'power2.out',
+        ease: "power2.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
-          end: 'bottom 20%',
-          toggleActions: 'play none none reverse'
-        }
+          start: "top 80%",
+          end: "bottom 20%",
+          toggleActions: "play none none reverse",
+        },
       }
     );
   }, []);
 
   const experiences = [
     {
-      title: "Research & Data Analyst",
+      title: "Team lead of Research & Data Team",
       company: "Neural Semiconductor Limited",
-      period: "2023 - Present",
-      description: "Leading data science initiatives for AI/ML research datasets. Specializing in data scraping, preprocessing, and visualization for medical applications.",
-      technologies: ["Python", "TensorFlow", "PyTorch", "SQL", "Data Visualization"]
+      period: "2025 - Present",
+      description:
+        "Currently serving as the Team Lead of the Research Team at Neural Semiconductor Ltd., where I manage and coordinate data-driven research projects across multiple domains and industries. My role involves overseeing data collection, analysis, and interpretation to generate actionable insights and ensure the accuracy, quality, and consistency of research outcomes.",
+      technologies: [
+        "Python",
+        "TensorFlow",
+        "PyTorch",
+        "SQL",
+        "Data Visualization",
+      ],
     },
     {
-      title: "Junior Data Scientist",
-      company: "Tech Solutions BD",
-      period: "2022 - 2023",
-      description: "Developed machine learning models for healthcare prediction systems. Improved model accuracy by 25% through innovative data processing techniques.",
-      technologies: ["Machine Learning", "Deep Learning", "Python", "R", "Statistical Analysis"]
-    }
+      title: "Research Assistant",
+      company: "North South University",
+      period: "2023 - 2025",
+      description:
+        "Previously, I worked as a Research Assistant at North South University (NSU) under the supervision of Dr. Fariah Mahzabin, where I contributed to projects involving data analysis and machine learning applications in Medical Domain.",
+      technologies: [
+        "Machine Learning",
+        "Deep Learning",
+        "Python",
+        "R",
+        "Statistical Analysis",
+      ],
+    },
   ];
 
   const education = [
@@ -48,14 +63,8 @@ const Experience: React.FC = () => {
       degree: "BSc in Computer Science and Engineering",
       institution: "North South University",
       period: "2020 - 2024",
-      cgpa: "3.43/4.00"
+      cgpa: "3.43/4.00",
     },
-    {
-      degree: "Higher Secondary Certificate",
-      institution: "Ideal College Dhanmondi",
-      period: "2017 - 2019",
-      cgpa: "GPA 5.00/5.00"
-    }
   ];
 
   return (
@@ -77,24 +86,42 @@ const Experience: React.FC = () => {
             <div className="relative">
               <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-full border-4 border-gray-900 z-10"></div>
               <div className="ml-20">
-                <h3 className="text-2xl font-bold text-white mb-8">Professional Experience</h3>
+                <h3 className="text-2xl font-bold text-white mb-8">
+                  Professional Experience
+                </h3>
                 {experiences.map((exp, index) => (
-                  <div key={index} className="glass-card mb-6 hover:neon-glow-soft transition-all duration-300">
+                  <div
+                    key={index}
+                    className="glass-card mb-6 hover:neon-glow-soft transition-all duration-300"
+                  >
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
                       <div>
-                        <h4 className="text-xl font-semibold text-white">{exp.title}</h4>
-                        <p className="text-neon-blue font-medium">{exp.company}</p>
+                        <h4 className="text-xl font-semibold text-white">
+                          {exp.title}
+                        </h4>
+                        <p className="text-neon-blue font-medium">
+                          {exp.company}
+                        </p>
                       </div>
-                      <span className="text-gray-400 text-sm md:text-base">{exp.period}</span>
+                      <span className="text-gray-400 text-sm md:text-base">
+                        {exp.period}
+                      </span>
                     </div>
-                    <p className="text-gray-300 mb-4 leading-relaxed">{exp.description}</p>
+                    <p className="text-gray-300 mb-4 leading-relaxed">
+                      {exp.description}
+                    </p>
                     <div className="flex flex-wrap gap-2">
                       {exp.technologies.map((tech, techIndex) => (
-                        <span key={techIndex} className={`px-3 py-1 rounded-full text-sm ${
-                          techIndex % 3 === 0 ? 'bg-neon-blue/20 text-neon-blue' :
-                          techIndex % 3 === 1 ? 'bg-neon-purple/20 text-neon-purple' :
-                          'bg-neon-pink/20 text-neon-pink'
-                        }`}>
+                        <span
+                          key={techIndex}
+                          className={`px-3 py-1 rounded-full text-sm ${
+                            techIndex % 3 === 0
+                              ? "bg-neon-blue/20 text-neon-blue"
+                              : techIndex % 3 === 1
+                              ? "bg-neon-purple/20 text-neon-purple"
+                              : "bg-neon-pink/20 text-neon-pink"
+                          }`}
+                        >
                           {tech}
                         </span>
                       ))}
@@ -108,15 +135,26 @@ const Experience: React.FC = () => {
             <div className="relative">
               <div className="absolute left-6 w-4 h-4 bg-gradient-to-r from-neon-purple to-neon-pink rounded-full border-4 border-gray-900 z-10"></div>
               <div className="ml-20">
-                <h3 className="text-2xl font-bold text-white mb-8">Education</h3>
+                <h3 className="text-2xl font-bold text-white mb-8">
+                  Education
+                </h3>
                 {education.map((edu, index) => (
-                  <div key={index} className="glass-card mb-6 hover:neon-glow-soft transition-all duration-300">
+                  <div
+                    key={index}
+                    className="glass-card mb-6 hover:neon-glow-soft transition-all duration-300"
+                  >
                     <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-2">
                       <div>
-                        <h4 className="text-xl font-semibold text-white">{edu.degree}</h4>
-                        <p className="text-neon-purple font-medium">{edu.institution}</p>
+                        <h4 className="text-xl font-semibold text-white">
+                          {edu.degree}
+                        </h4>
+                        <p className="text-neon-purple font-medium">
+                          {edu.institution}
+                        </p>
                       </div>
-                      <span className="text-gray-400 text-sm md:text-base">{edu.period}</span>
+                      <span className="text-gray-400 text-sm md:text-base">
+                        {edu.period}
+                      </span>
                     </div>
                     <p className="text-gray-300">{edu.cgpa}</p>
                   </div>

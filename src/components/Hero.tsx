@@ -159,10 +159,8 @@ const Hero: React.FC = () => {
           }}
         >
           <span
-            className="text-neon-blue font-bold neon-text-glow block"
+            className="text-white font-bold block"
             style={{
-              textShadow:
-                "0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 60px #00d4ff",
               transform: "translateZ(50px)",
             }}
           >
@@ -184,8 +182,8 @@ const Hero: React.FC = () => {
             transform: "translateZ(20px)",
           }}
         >
-          Research & Data Analyst specializing in Machine Learning and Deep
-          Learning for medical applications
+          Team Lead of the Research & Data Team, specializing in Data Analysis,
+          Machine Learning, and AI-driven innovation.
         </p>
 
         <div
